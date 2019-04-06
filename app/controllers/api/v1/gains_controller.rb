@@ -2,46 +2,42 @@ class Api::V1::GainsController < ApplicationController
     before_action :authenticate_with_token!
     
     def index
-        gains = current_user.gains 
+        gains = current_user.gains
         render json: {gains: gains}, status: 200
-    end   
+    end
     
-    def show 
+    def show
         gain = current_user.gains.find(params[:id])
         render json: gain, status: 200
     end
     
-    def create 
+    def create
         gain = current_user.gains.build(gain_params)
         if gain.save
-            rende json: gain, status: 201
-            
+            render json: gain, status 201
         else
-            render json: {errors:hain.errors}, status: 422 
-            
+            render json: {errors: gain.errors}, status 422
         end
     end
-    
-    def update 
+
+    def update
         gain = current_user.gains.find(params[:id])
         if gain.update_attributes(gain_params)
-            rende json: gain, status: 200
-            
+            render json: gain, status: 200
         else
-            render json: {errors:hain.errors}, status: 422 
-            
+            render json: {errors: gain.errors}, status 422
         end
     end
     
-    def destroy 
+    def destroy
         gain = current_user.gains.find(params[:id])
-        gains.destroy
+        gain.destroy
         head 204
     end
     
     private
     
-    def gain_params 
-        params.require(:gain).permit(description, :value, :date)
+    def gain_params
+         params.require(:gain).permit(description, :value, :date)
     end
 end
