@@ -1,8 +1,9 @@
 class User < ApplicationRecord
+                    
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
     devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+           :recoverable, :rememberable, :trackable, :validatable
     
     include DeviseTokenAuth::Concerns::User
 
@@ -10,7 +11,7 @@ class User < ApplicationRecord
     before_create :generate_authentication_token!
     has_many :gains, dependent: :destroy
     has_many :expenses, dependent: :destroy
-
+    
     def info
         "#{email} - #{create_at} - Token #{Devise.friendly_token}"
     end
@@ -20,6 +21,4 @@ class User < ApplicationRecord
             self.auth_token = Devise.friendly_token
         end while User.exists?(auth_token: auth_token)
     end
-    
 end
-    

@@ -1,16 +1,16 @@
 class Api::V2::ExpensesController < Api::V2::BaseController
-    before_action :authenticate_with_token!
-    
+    before_action :authenticate_user!
+
     def index
         expenses = current_user.expenses.ransack(params[:q]).result
         render json: expenses, status: 200
     end
-    
+
     def show
         expense = current_user.expenses.find(params[:id])
         render json: expense, status: 200
     end
-    
+
     def create
         expense = current_user.expenses.build(expense_params)
         if expense.save
@@ -28,18 +28,16 @@ class Api::V2::ExpensesController < Api::V2::BaseController
             render json: {errors: expense.errors}, status: 422
         end
     end
-    
+
     def destroy
         expense = current_user.expenses.find(params[:id])
         expense.destroy
         head 204
     end
-    
+
     private
-    
+
     def expense_params
          params.require(:expense).permit(:description, :value, :date)
     end
 end
-
-

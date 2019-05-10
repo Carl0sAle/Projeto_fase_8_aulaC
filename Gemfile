@@ -1,21 +1,23 @@
 source 'https://rubygems.org'
 
+ruby '2.4.0'
+
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
 
-#Minhas Gems
+#extra gems
 gem 'devise'
 gem 'active_model_serializers', '~>0.10.0'
 gem 'ransack'
 gem 'omniauth'
 gem 'devise_token_auth'
+gem 'rack-cors'
+gem 'rails-i18n', '~>5.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
-# Use mysql as the database for Active Record
-gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -50,6 +52,12 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
+  # Use mysql as the database for Active Record
+  gem 'mysql2', '>= 0.3.18', '< 0.5'
+end
+
+group :production do
+  gem 'pg', '~> 0.20'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

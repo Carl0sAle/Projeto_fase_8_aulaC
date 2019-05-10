@@ -1,5 +1,4 @@
-class Api::V1::ExpensesController < Api::V1::BaseController
-    
+class Api::V1::UsersController < Api::V1::BaseController
     before_action :authenticate_with_token!, only:[:update, :destroy]
     respond_to :json
     
@@ -24,32 +23,23 @@ class Api::V1::ExpensesController < Api::V1::BaseController
     
     def update
         user = current_user
-        
+
         if user.update(user_params)
             render json: user, status: 200
         else
             render json: { errors: user.errors }, status: 422
         end
     end
-    
+
     def destroy
         current_user.destroy
         head 204
     end
+
     
     private
     
     def user_params
         params.require(:user).permit(:email, :password, :password_confirmation) 
     end
-    
 end
-
-
-
-
-
-
-
-
-

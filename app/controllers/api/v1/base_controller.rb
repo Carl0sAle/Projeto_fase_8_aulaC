@@ -1,3 +1,3 @@
-class Api::V1::ExpensesController < Api::V1::BaseController
+class Api::V1::BaseController < ApplicationController
     include Authenticable
 end
